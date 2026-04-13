@@ -11,7 +11,7 @@ public class CorridorFirstDungeonGeneration : SimpleRandomWalkMapGenerator
     [Range(0.1f, 1)]
     private float roomPercent;
 
-    protected override void RunProceduralGeneration()
+    public override void RunProceduralGeneration()
     {
         CorridorFirstGeneration();
     }

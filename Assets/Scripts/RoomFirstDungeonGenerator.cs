@@ -23,17 +23,22 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
     private SpawnableItem decorationItem;
     [SerializeField] 
     private GameObject playerPrefab;
+    [SerializeField]
+    private GameObject exitDoor;
 
     private List<BoundsInt> _rooms;
     private HashSet<Vector2Int> _floor;
 
-    protected override void RunProceduralGeneration()
+    private List<GameObject> _spawnedObjects = new List<GameObject>();
+
+    public override void RunProceduralGeneration()
     {
         CreateRooms();
     }
 
-    private void CreateRooms()
+    public void CreateRooms()
     {
+        
         _rooms = ProceduralGenerationAlgorithms.BinarySpacePartitioning(new BoundsInt((Vector3Int)startPosition, new Vector3Int(dungeonWidth, dungeonHeight, 0)), minRoomWidth, minRoomHeight);
 
         HashSet<Vector2Int> floor = new HashSet<Vector2Int>();
@@ -63,6 +68,15 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
         SpawnAll(_rooms, floor);
     }
 
+    public void ClearSpawnedObjects()
+    {
+        foreach (var obj in _spawnedObjects)
+        {
+            if (obj != null) DestroyImmediate(obj);
+        }
+        _spawnedObjects.Clear();
+    }
+
     private void SpawnAll(List<BoundsInt> rooms, HashSet<Vector2Int> floor)
     {
         SpawnPlayer(rooms[0], floor);
@@ -70,28 +84,28 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
         for (int i = 1; i < rooms.Count; i++)
         {
             List<Vector2Int> roomFloorTiles = GetFloorTilesInRoom(rooms[i], floor);
-
             if (roomFloorTiles.Count == 0) continue;
 
             SpawnItemInRoom(enemyItem, roomFloorTiles);
             SpawnItemInRoom(lootItem, roomFloorTiles);
             SpawnItemInRoom(decorationItem, roomFloorTiles);
         }
+
+        SpawnExit(rooms, floor);
     }
     private void SpawnPlayer(BoundsInt firstRoom, HashSet<Vector2Int> floor)
     {
         Vector2Int center = GetRoomCenter(firstRoom);
 
-        // Walk outward from center until we find a valid floor tile
         Vector2Int spawnTile = FindNearestFloorTile(center, floor);
-        Instantiate(playerPrefab, new Vector3(spawnTile.x, spawnTile.y, 0), Quaternion.identity);
+        var player = Instantiate(playerPrefab, new Vector3(spawnTile.x, spawnTile.y, 0), Quaternion.identity);
+        _spawnedObjects.Add(player);
     }
 
     private void SpawnItemInRoom(SpawnableItem item, List<Vector2Int> roomTiles)
     {
         if (item == null) return;
 
-        // Shuffle a copy so picks are random without repetition
         var available = new List<Vector2Int>(roomTiles);
         Shuffle(available);
 
@@ -101,10 +115,41 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
             if (spawned >= item.maxPerRoom) break;
             if (UnityEngine.Random.value <= item.spawnChance)
             {
-                Instantiate(item.prefab, new Vector3(tile.x, tile.y, 0), Quaternion.identity);
+                var spawned_obj = Instantiate(item.prefab, new Vector3(tile.x, tile.y, 0), Quaternion.identity);
+                _spawnedObjects.Add(spawned_obj);
                 spawned++;
             }
         }
+    }
+
+    private void SpawnExit(List<BoundsInt> rooms, HashSet<Vector2Int> floor) 
+    {
+        if (exitDoor == null || rooms.Count < 2)
+        {
+            return;
+        }
+
+        Vector2Int startCenter = GetRoomCenter(rooms[0]);
+        BoundsInt furthestRoom = rooms[1];
+        float maxDistance = 0f;
+
+        for (int i = 1; i < rooms.Count; i++)
+        {
+            Vector2Int center = GetRoomCenter(rooms[i]);
+            float distance = Vector2Int.Distance(startCenter, center);
+            if (distance > maxDistance)
+            {
+                maxDistance = distance;
+                furthestRoom = rooms[i];
+            }
+        }
+
+        Vector2Int roomCenter = GetRoomCenter(furthestRoom);
+        Vector2Int exitTile = FindNearestFloorTile(roomCenter, floor);
+
+        var exit = Instantiate(exitDoor, new Vector3(exitTile.x, exitTile.y, 0), Quaternion.identity);
+        _spawnedObjects.Add(exit);
+
     }
     private List<Vector2Int> GetFloorTilesInRoom(BoundsInt room, HashSet<Vector2Int> floor)
     {
@@ -114,19 +159,25 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
             for (int row = offset; row < room.size.y - offset; row++)
             {
                 var pos = (Vector2Int)room.min + new Vector2Int(col, row);
-                if (floor.Contains(pos)) tiles.Add(pos);
+                if (floor.Contains(pos) && HasAllNeighbours(pos, floor))
+                    tiles.Add(pos);
             }
         }
         return tiles;
     }
-
-    private Vector2Int GetRoomCenter(BoundsInt room)
-        => new Vector2Int(Mathf.RoundToInt(room.center.x), Mathf.RoundToInt(room.center.y));
+    private bool HasAllNeighbours(Vector2Int pos, HashSet<Vector2Int> floor)
+    {
+        for (int x = -1; x <= 1; x++)
+            for (int y = -1; y <= 1; y++)
+                if (!floor.Contains(pos + new Vector2Int(x, y)))
+                    return false;
+        return true;
+    }
+    private Vector2Int GetRoomCenter(BoundsInt room) => new Vector2Int(Mathf.RoundToInt(room.center.x), Mathf.RoundToInt(room.center.y));
 
     private Vector2Int FindNearestFloorTile(Vector2Int origin, HashSet<Vector2Int> floor)
     {
         if (floor.Contains(origin)) return origin;
-        // Spiral outward
         for (int radius = 1; radius < 10; radius++)
             for (int x = -radius; x <= radius; x++)
                 for (int y = -radius; y <= radius; y++)
