@@ -9,8 +9,8 @@ public class GameManager : MonoBehaviour
     public Tilemap floorTileMap;
     public Tilemap wallTileMap;
 
-    void Start()
-    {
+    void Awake()
+    {   
         GenerateNewDungeon();
     }
 
@@ -26,9 +26,5 @@ public class GameManager : MonoBehaviour
         camFollow.GetComponent<CameraFollow>().FindTarget();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+   
 }
