@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4be72e74ee033f488535d5e99f51714, type: 3}
-  m_Name: SimpleRandomWalkParameteIsland
+  m_Script: {fileID: 11500000, guid: b518c9178cd2cfd4e94e3a6055c1c9f1, type: 3}
+  m_Name: TrianglEnemy
   m_EditorClassIdentifier: 
-  iterations: 100
-  walkLength: 20
-  startRandomlyEachIteration: 0
+  prefab: {fileID: 0}
+  spawnChance: 0.1
+  maxPerRoom: 3
