@@ -16,15 +16,17 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
 
     [Header("Spawning")]
     [SerializeField] 
-    private List<SpawnableItem> enemyItem;
+    private List<SpawnableItem> enemyItems;
     [SerializeField] 
-    private List<SpawnableItem> lootItem;
+    private List<SpawnableItem> lootItems;
     [SerializeField] 
-    private List<SpawnableItem> decorationItem;
+    private List<SpawnableItem> decorationItems;
     [SerializeField] 
     private GameObject playerPrefab;
     [SerializeField]
     private GameObject exitDoor;
+    [SerializeField]
+    private List<GameObject> bossPrefabs;
 
     private List<BoundsInt> _rooms;
     private HashSet<Vector2Int> _floor;
@@ -84,14 +86,17 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
         for (int i = 1; i < rooms.Count; i++)
         {
             List<Vector2Int> roomFloorTiles = GetFloorTilesInRoom(rooms[i], floor);
-            if (roomFloorTiles.Count == 0) continue;
+            if (roomFloorTiles.Count == 0) 
+            {
+                continue;
+            } 
 
-            SpawnItemInRoom(enemyItem, roomFloorTiles);
-            SpawnItemInRoom(lootItem, roomFloorTiles);
-            SpawnItemInRoom(decorationItem, roomFloorTiles);
+            SpawnItemInRoom(enemyItems, roomFloorTiles);
+            SpawnItemInRoom(lootItems, roomFloorTiles);
+            SpawnItemInRoom(decorationItems, roomFloorTiles);
         }
 
-        SpawnExit(rooms, floor);
+        SpawnBossAndExit(rooms, floor);
     }
     private void SpawnPlayer(BoundsInt firstRoom, HashSet<Vector2Int> floor)
     {
@@ -102,9 +107,12 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
         _spawnedObjects.Add(player);
     }
 
-    private void SpawnItemInRoom(List<SpawnableItem> item, List<Vector2Int> roomTiles)
+    private void SpawnItemInRoom(List<SpawnableItem> items, List<Vector2Int> roomTiles)
     {
-        if (item == null) return;
+        if (items == null || items.Count == 0) return;
+
+        int thingToSpawn = UnityEngine.Random.Range(0, items.Count);
+        SpawnableItem item = items[thingToSpawn];
 
         var available = new List<Vector2Int>(roomTiles);
         Shuffle(available);
@@ -112,34 +120,20 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
         int spawned = 0;
         foreach (var tile in available)
         {
-            /*if (spawned >= item.maxPerRoom) break;
+            if (spawned >= item.maxPerRoom) break;
+
             if (UnityEngine.Random.value <= item.spawnChance)
             {
                 var spawned_obj = Instantiate(item.prefab, new Vector3(tile.x, tile.y, 0), Quaternion.identity);
                 _spawnedObjects.Add(spawned_obj);
                 spawned++;
-            }*/
-            var thingToSpawn = UnityEngine.Random.Range(0, item.Count);
-            if (spawned >= item[thingToSpawn].maxPerRoom) break;
-
-            if (item.Count == 1) 
-            {
-                thingToSpawn = 0;
             }
-
-            if (UnityEngine.Random.value <= item[thingToSpawn].spawnChance) 
-            {
-                var spawned_obj = Instantiate(item[thingToSpawn].prefab, new Vector3(tile.x, tile.y, 0), Quaternion.identity);
-                _spawnedObjects.Add(spawned_obj);
-                spawned++;
-            }
-
         }
     }
-
-    private void SpawnExit(List<BoundsInt> rooms, HashSet<Vector2Int> floor) 
+    
+    private void SpawnBossAndExit(List<BoundsInt> rooms, HashSet<Vector2Int> floor) 
     {
-        if (exitDoor == null || rooms.Count < 2)
+        if ((exitDoor == null && bossPrefabs.Count == 0)  || rooms.Count < 2)
         {
             return;
         }
@@ -165,6 +159,10 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
         var exit = Instantiate(exitDoor, new Vector3(exitTile.x, exitTile.y, 0), Quaternion.identity);
         _spawnedObjects.Add(exit);
 
+        int bossToSpawn = UnityEngine.Random.Range(0, bossPrefabs.Count);
+        var boss = Instantiate(bossPrefabs[bossToSpawn], new Vector3(exitTile.x, exitTile.y, 0), Quaternion.identity); //spawning boss for now, would like own function
+        _spawnedObjects.Add(boss);//boss just spawns in same room as exit, would like seperate rooms so player can collect key?
+
     }
     private List<Vector2Int> GetFloorTilesInRoom(BoundsInt room, HashSet<Vector2Int> floor)
     {
@@ -174,8 +172,10 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
             for (int row = offset; row < room.size.y - offset; row++)
             {
                 var pos = (Vector2Int)room.min + new Vector2Int(col, row);
-                if (floor.Contains(pos) && HasAllNeighbours(pos, floor))
+                if (floor.Contains(pos) && HasAllNeighbours(pos, floor)) 
+                {
                     tiles.Add(pos);
+                }
             }
         }
         return tiles;
@@ -212,8 +212,8 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
     {
         for (int i = list.Count - 1; i > 0; i--)
         {
-            int j = UnityEngine.Random.Range(0, i + 1);
-            (list[i], list[j]) = (list[j], list[i]);
+            int j = UnityEngine.Random.Range(0, i + 1); //i fear having so many random function calls is a bit inefficient 
+            (list[i], list[j]) = (list[j], list[i]); 
         }
     }
     private HashSet<Vector2Int> CreateRoomsRandomly(List<BoundsInt> roomsList)

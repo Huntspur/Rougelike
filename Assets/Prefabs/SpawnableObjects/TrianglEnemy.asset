@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: TrianglEnemy
   m_EditorClassIdentifier: 
   prefab: {fileID: 170344152301488550, guid: 3b06c5d781192a7468fac3671d6556ff, type: 3}
-  spawnChance: 0.1
+  spawnChance: 0.057
   maxPerRoom: 3
