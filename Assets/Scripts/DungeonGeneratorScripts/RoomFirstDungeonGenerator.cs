@@ -16,11 +16,11 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
 
     [Header("Spawning")]
     [SerializeField] 
-    private SpawnableItem enemyItem;
+    private List<SpawnableItem> enemyItem;
     [SerializeField] 
-    private SpawnableItem lootItem;
+    private List<SpawnableItem> lootItem;
     [SerializeField] 
-    private SpawnableItem decorationItem;
+    private List<SpawnableItem> decorationItem;
     [SerializeField] 
     private GameObject playerPrefab;
     [SerializeField]
@@ -102,7 +102,7 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
         _spawnedObjects.Add(player);
     }
 
-    private void SpawnItemInRoom(SpawnableItem item, List<Vector2Int> roomTiles)
+    private void SpawnItemInRoom(List<SpawnableItem> item, List<Vector2Int> roomTiles)
     {
         if (item == null) return;
 
@@ -112,13 +112,28 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
         int spawned = 0;
         foreach (var tile in available)
         {
-            if (spawned >= item.maxPerRoom) break;
+            /*if (spawned >= item.maxPerRoom) break;
             if (UnityEngine.Random.value <= item.spawnChance)
             {
                 var spawned_obj = Instantiate(item.prefab, new Vector3(tile.x, tile.y, 0), Quaternion.identity);
                 _spawnedObjects.Add(spawned_obj);
                 spawned++;
+            }*/
+            var thingToSpawn = UnityEngine.Random.Range(0, item.Count);
+            if (spawned >= item[thingToSpawn].maxPerRoom) break;
+
+            if (item.Count == 1) 
+            {
+                thingToSpawn = 0;
             }
+
+            if (UnityEngine.Random.value <= item[thingToSpawn].spawnChance) 
+            {
+                var spawned_obj = Instantiate(item[thingToSpawn].prefab, new Vector3(tile.x, tile.y, 0), Quaternion.identity);
+                _spawnedObjects.Add(spawned_obj);
+                spawned++;
+            }
+
         }
     }
 
@@ -178,13 +193,18 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
     private Vector2Int FindNearestFloorTile(Vector2Int origin, HashSet<Vector2Int> floor)
     {
         if (floor.Contains(origin)) return origin;
-        for (int radius = 1; radius < 10; radius++)
-            for (int x = -radius; x <= radius; x++)
+        for (int radius = 1; radius < 10; radius++) 
+        {
+            for (int x = -radius; x <= radius; x++) 
+            {
                 for (int y = -radius; y <= radius; y++)
                 {
                     var candidate = origin + new Vector2Int(x, y);
                     if (floor.Contains(candidate)) return candidate;
                 }
+            }
+               
+        }
         return origin;
     }
 
