@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
 {
+    [Header("Generation Settings")]
     [SerializeField]
     private int minRoomWidth = 4, minRoomHeight = 4;
     [SerializeField]
@@ -14,7 +15,7 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
     [SerializeField]
     private bool randomWalkRooms = false;
 
-    [Header("Spawning")]
+    [Header("Prefabs To Spawn")]
     [SerializeField] 
     private List<SpawnableItem> enemyItems;
     [SerializeField] 
@@ -182,17 +183,26 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
     }
     private bool HasAllNeighbours(Vector2Int pos, HashSet<Vector2Int> floor)
     {
-        for (int x = -1; x <= 1; x++)
-            for (int y = -1; y <= 1; y++)
-                if (!floor.Contains(pos + new Vector2Int(x, y)))
+        for (int x = -1; x <= 1; x++) 
+        {
+            for (int y = -1; y <= 1; y++) 
+            {
+                if (!floor.Contains(pos + new Vector2Int(x, y))) 
+                {
                     return false;
+                }   
+            }
+        }     
         return true;
     }
     private Vector2Int GetRoomCenter(BoundsInt room) => new Vector2Int(Mathf.RoundToInt(room.center.x), Mathf.RoundToInt(room.center.y));
 
     private Vector2Int FindNearestFloorTile(Vector2Int origin, HashSet<Vector2Int> floor)
     {
-        if (floor.Contains(origin)) return origin;
+        if (floor.Contains(origin)) 
+        {
+            return origin;
+        } 
         for (int radius = 1; radius < 10; radius++) 
         {
             for (int x = -radius; x <= radius; x++) 
@@ -317,7 +327,6 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
                 }
             }
         }
-
         return floor;
     }
 }
