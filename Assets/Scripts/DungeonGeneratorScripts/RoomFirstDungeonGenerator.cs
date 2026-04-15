@@ -92,7 +92,7 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
 
             SpawnItemInRoom(enemyItems, roomFloorTiles);
             SpawnItemInRoom(lootItems, roomFloorTiles);
-            SpawnItemInRoom(decorationItems, roomFloorTiles);
+            SpawnItemInRoom(decorationItems, roomFloorTiles); //seperate list for torches and other things? quite easy to implement more
         }
 
         SpawnBossAndExit(rooms, floor);
