@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
 {
-    [Header("Generation Settings")]
+    
     [SerializeField]
     private int minRoomWidth = 4, minRoomHeight = 4;
     [SerializeField]
@@ -30,7 +30,6 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
     private List<GameObject> bossPrefabs;
 
     private List<BoundsInt> _rooms;
-    private HashSet<Vector2Int> _floor;
 
     private List<GameObject> _spawnedObjects = new List<GameObject>();
 
@@ -67,7 +66,6 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
         tilemapVisualiser.PaintFloorTiles(floor);
         WallGenerator.CreateWalls(floor, tilemapVisualiser);
         
-        _floor = floor;
         SpawnAll(_rooms, floor);
     }
 

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: SwordTemp
   m_EditorClassIdentifier: 
   prefab: {fileID: 2138397188925293341, guid: 91f1d94a4c979e54689e340e343844bc, type: 3}
-  spawnChance: 0.02
+  spawnChance: 0.001
   maxPerRoom: 1
