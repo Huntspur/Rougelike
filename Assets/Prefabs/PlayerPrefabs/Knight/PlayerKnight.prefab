@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 249757544766573769}
   - component: {fileID: 6265643958116875124}
   m_Layer: 0
-  m_Name: Player
+  m_Name: PlayerKnight
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1304c6d3fbcc8f54c9f318b6d6184676, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6
+  speed: 4
   facingRight: 0
 --- !u!50 &-7800108789152354533
 Rigidbody2D:
