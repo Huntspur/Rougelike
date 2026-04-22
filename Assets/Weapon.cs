@@ -19,6 +19,8 @@ public class Weapon : MonoBehaviour
     private void Start()
     {
         hitbox = GetComponent<BoxCollider2D>();
+
+
         anim = GetComponentInParent<Animator>();
         EquipWeapon();
     }
@@ -38,6 +40,9 @@ public class Weapon : MonoBehaviour
     public void EquipWeapon()
     {
         if (currWeapon == null) return;
+
+        hitbox.offset = new Vector2(0, attackRange);
+
         Instantiate(currWeapon, weaponPoint.position, Quaternion.identity, weaponPoint);
     }
 
