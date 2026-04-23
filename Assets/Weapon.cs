@@ -40,15 +40,11 @@ public class Weapon : MonoBehaviour
             attackCooldown -= Time.deltaTime;
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && attackCooldown <= 0 && weaponData !=null)
+
+        if (Input.GetKeyDown(KeyCode.E) && attackCooldown <= 0 && weaponData !=null)
         {
            
             Attack();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Q)) 
-        {
-            UnEquipWeapon();
         }
     }
 
@@ -64,7 +60,7 @@ public class Weapon : MonoBehaviour
         hitbox.offset = weaponData.hitboxOffset;
         hitbox.size = weaponData.hitboxSize;
 
-        equippedWeaponInstance = Instantiate(currWeapon, weaponPoint.position, Quaternion.identity, weaponPoint);
+        equippedWeaponInstance = Instantiate(currWeapon, weaponPoint.position, weaponPoint.rotation, weaponPoint);
     }
 
     protected void Attack()
