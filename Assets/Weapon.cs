@@ -4,31 +4,37 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    public int attackRange;
-    public int damage;
-    public float baseAttackSpeed = 1f;
+    [Header("Weapon Data")]
+    public SOWeaponScripty weaponData;
+    private GameObject currWeapon => weaponData.weaponObj;
+    private int damage => weaponData.weaponDamage;
+    private float baseAttackSpeed => weaponData.baseAttackSpeed;
+
+    [Header("Attack Speed")]
     private float attackSpeedModifier = 0f;
     private float attackCooldown = 0f;
     public float EffectiveAttackSpeed => Mathf.Max(0.1f, baseAttackSpeed + attackSpeedModifier);
 
-    public GameObject currWeapon;
+    [Header("References")]
     public Animator anim;
     public Transform weaponPoint;
     public BoxCollider2D hitbox;
 
+    private GameObject equippedWeaponInstance;
+
     private void Start()
     {
         hitbox = GetComponent<BoxCollider2D>();
-
-
         anim = GetComponentInParent<Animator>();
         EquipWeapon();
     }
 
     void Update()
     {
-        if (attackCooldown > 0)
+        if (attackCooldown > 0) 
+        {
             attackCooldown -= Time.deltaTime;
+        }
 
         if (Input.GetKeyDown(KeyCode.E) && attackCooldown <= 0)
         {
@@ -41,9 +47,15 @@ public class Weapon : MonoBehaviour
     {
         if (currWeapon == null) return;
 
-        hitbox.offset = new Vector2(0, attackRange);
+        if (equippedWeaponInstance != null) 
+        {
+            Destroy(equippedWeaponInstance);
+        }
 
-        Instantiate(currWeapon, weaponPoint.position, Quaternion.identity, weaponPoint);
+        hitbox.offset = weaponData.hitboxOffset;
+        hitbox.size = weaponData.hitboxSize;
+
+        equippedWeaponInstance = Instantiate(currWeapon, weaponPoint.position, Quaternion.identity, weaponPoint);
     }
 
     protected void Attack()
@@ -62,9 +74,20 @@ public class Weapon : MonoBehaviour
             if (!collidersToDamage[i].CompareTag("Enemy")) continue;
 
             EnemyController enemy = collidersToDamage[i].GetComponent<EnemyController>();
-            if (enemy != null)
+            if (enemy != null) 
+            {
                 enemy.TakeDamage(damage);
+            }
         }
+    }
+
+    //unequip weapon
+
+    public void SwapWeapon(SOWeaponScripty newWeaponData)
+    {
+        weaponData = newWeaponData;
+        attackSpeedModifier = 0f; 
+        EquipWeapon();
     }
 
     public void AddAttackSpeedModifier(float amount) => attackSpeedModifier += amount;
