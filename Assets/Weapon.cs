@@ -7,13 +7,17 @@ public class Weapon : MonoBehaviour
     [Header("Weapon Data")]
     public SOWeaponScripty weaponData;
     private GameObject currWeapon => weaponData.weaponObj;
-    private int damage => weaponData.weaponDamage;
-    private float baseAttackSpeed => weaponData.baseAttackSpeed;
+    public int damage => weaponData.weaponDamage;
+    public float playbackSpeed => weaponData.animtionSpeed;
+
+    public float baseAttackSpeed => weaponData.baseAttackSpeed;
 
     [Header("Attack Speed")]
     private float attackSpeedModifier = 0f;
     private float attackCooldown = 0f;
     public float EffectiveAttackSpeed => Mathf.Max(0.1f, baseAttackSpeed + attackSpeedModifier);
+
+    public bool attacking = false;
 
     [Header("References")]
     public Animator anim;
@@ -24,8 +28,8 @@ public class Weapon : MonoBehaviour
 
     private void Start()
     {
-        hitbox = GetComponent<BoxCollider2D>();
-        anim = GetComponentInParent<Animator>();
+        anim = GetComponent<Animator>();
+        hitbox.enabled = false;
         EquipWeapon();
     }
 
@@ -36,10 +40,15 @@ public class Weapon : MonoBehaviour
             attackCooldown -= Time.deltaTime;
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && attackCooldown <= 0)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && attackCooldown <= 0 && weaponData !=null)
         {
-            anim.SetTrigger("Attack");
+           
             Attack();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q)) 
+        {
+            UnEquipWeapon();
         }
     }
 
@@ -60,28 +69,32 @@ public class Weapon : MonoBehaviour
 
     protected void Attack()
     {
+        
         attackCooldown = 1f / EffectiveAttackSpeed;
 
-        Collider2D[] collidersToDamage = new Collider2D[10];
-        ContactFilter2D filter = new ContactFilter2D();
-        filter.useTriggers = true;
-
-        int colliderCount = Physics2D.OverlapCollider(hitbox, filter, collidersToDamage);
-
-        for (int i = 0; i < colliderCount; i++)
-        {
-            if (collidersToDamage[i] == null) continue;
-            if (!collidersToDamage[i].CompareTag("Enemy")) continue;
-
-            EnemyController enemy = collidersToDamage[i].GetComponent<EnemyController>();
-            if (enemy != null) 
-            {
-                enemy.TakeDamage(damage);
-            }
-        }
+        anim.speed = playbackSpeed;
+        anim.SetTrigger("Attack");
     }
 
-    //unequip weapon
+    public void IsAttacking() 
+    {
+        attacking = true;
+        hitbox.enabled = true;
+    }
+
+    public void StopAttacking() 
+    {
+        attacking = false;
+        hitbox.enabled = false;
+        anim.speed = 1;
+    }
+
+    public void UnEquipWeapon() 
+    {
+        Instantiate(equippedWeaponInstance, weaponPoint.position, Quaternion.identity);
+        weaponData = null;
+        Destroy(equippedWeaponInstance);
+    }
 
     public void SwapWeapon(SOWeaponScripty newWeaponData)
     {
@@ -92,6 +105,7 @@ public class Weapon : MonoBehaviour
 
     public void AddAttackSpeedModifier(float amount) => attackSpeedModifier += amount;
     public void RemoveAttackSpeedModifier(float amount) => attackSpeedModifier -= amount;
+
 
     public IEnumerator ApplyTimedAttackSpeedBuff(float amount, float duration)
     {

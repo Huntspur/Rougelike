@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e97440b8fef7544d98930a7375aac60, type: 3}
+  m_Name: Weapon_BlueMace
+  m_EditorClassIdentifier: 
+  weaponName: BlueMace
+  weaponDamage: 40
+  baseAttackSpeed: 1
+  animtionSpeed: 0.5
+  hitboxOffset: {x: 0, y: 1}
+  hitboxSize: {x: 1, y: 1}
+  weaponObj: {fileID: 2138397188925293341, guid: e7ec9a53489dc3d4da0dfd7e938b0f7b, type: 3}
+  animatorOveride: {fileID: 0}

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5665572536717414489}
   - component: {fileID: 6491839066225321309}
-  - component: {fileID: 4858536321193808992}
+  - component: {fileID: 7454794748521051592}
   m_Layer: 0
   m_Name: WeaponPoint
   m_TagString: Untagged
@@ -79,7 +79,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &4858536321193808992
+--- !u!114 &7454794748521051592
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -88,16 +88,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2921575887549746081}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bbf9dfc802c32b439f870d0019f716f, type: 3}
+  m_Script: {fileID: 11500000, guid: a05592462df6dfe47b43b38671286bc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 2
-  damage: 10
-  baseAttackSpeed: 1
-  currWeapon: {fileID: 2138397188925293341, guid: 91f1d94a4c979e54689e340e343844bc, type: 3}
-  anim: {fileID: 0}
-  weaponPoint: {fileID: 5665572536717414489}
-  hitbox: {fileID: 6491839066225321309}
+  playerWeapon: {fileID: 1758362546745876784}
 --- !u!1 &7123996893758103633
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,6 +102,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1605164739335077337}
   - component: {fileID: 6044208892168296972}
+  - component: {fileID: 1758362546745876784}
   - component: {fileID: -7800108789152354533}
   - component: {fileID: 6029523824072890778}
   - component: {fileID: 249757544766573769}
@@ -149,6 +144,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 4
   facingRight: 0
+--- !u!114 &1758362546745876784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7123996893758103633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bbf9dfc802c32b439f870d0019f716f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponData: {fileID: 11400000, guid: f116adc716c089d46b0ba168c0bf1ccb, type: 2}
+  attacking: 0
+  anim: {fileID: 0}
+  weaponPoint: {fileID: 5665572536717414489}
+  hitbox: {fileID: 6491839066225321309}
 --- !u!50 &-7800108789152354533
 Rigidbody2D:
   serializedVersion: 5

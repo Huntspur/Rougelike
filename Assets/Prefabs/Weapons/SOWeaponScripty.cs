@@ -6,7 +6,8 @@ public class SOWeaponScripty : ScriptableObject
     public string weaponName;
    
     public int weaponDamage;
-    public int baseAttackSpeed;
+    public float baseAttackSpeed;
+    public float animtionSpeed = 1;
 
     public Vector2 hitboxOffset;
     public Vector2 hitboxSize;
