@@ -22,6 +22,8 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
     private List<SpawnableItem> lootItems;
     [SerializeField] 
     private List<SpawnableItem> decorationItems;
+    [SerializeField]
+    private List<SpawnableItem> lightItems;
     [SerializeField] 
     private GameObject playerPrefab;
     [SerializeField]
@@ -92,6 +94,7 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
 
             SpawnItemInRoom(enemyItems, roomFloorTiles);
             SpawnItemInRoom(lootItems, roomFloorTiles);
+            SpawnItemInRoom(lightItems, roomFloorTiles);
             SpawnItemInRoom(decorationItems, roomFloorTiles); //seperate list for torches and other things? quite easy to implement more
         }
 

@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 6029523824072890778}
   - component: {fileID: 249757544766573769}
   - component: {fileID: 6265643958116875124}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Toaster
   m_TagString: Player
   m_Icon: {fileID: 0}

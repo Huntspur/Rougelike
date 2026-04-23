@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e97440b8fef7544d98930a7375aac60, type: 3}
   m_Name: Weapon_BlueSword
   m_EditorClassIdentifier: 
-  weaponName: BlueSword
-  weaponDamage: 25
-  baseAttackSpeed: 3
-  animtionSpeed: 1
-  hitboxOffset: {x: 0, y: 1}
+  weaponName: BlueHammer
+  weaponDamage: 100
+  baseAttackSpeed: 0.75
+  animtionSpeed: 0.25
+  hitboxOffset: {x: 0, y: 1.4}
   hitboxSize: {x: 1, y: 1}
-  weaponObj: {fileID: 2138397188925293341, guid: 91f1d94a4c979e54689e340e343844bc, type: 3}
+  weaponObj: {fileID: 2138397188925293341, guid: e1f26a231643424458f08b6f43e2b35a, type: 3}
   animatorOveride: {fileID: 0}
