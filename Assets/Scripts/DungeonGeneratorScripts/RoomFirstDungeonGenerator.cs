@@ -105,8 +105,16 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
         Vector2Int center = GetRoomCenter(firstRoom);
 
         Vector2Int spawnTile = FindNearestFloorTile(center, floor);
+
+        //This spawns new player
+        /*
         var player = Instantiate(playerPrefab, new Vector3(spawnTile.x, spawnTile.y, 0), Quaternion.identity);
         _spawnedObjects.Add(player);
+        */
+        //We will instead just change position of player everytime new dungeon generated
+
+        playerPrefab.gameObject.transform.position = new Vector3(spawnTile.x, spawnTile.y, 0);
+
     }
 
     private void SpawnItemInRoom(List<SpawnableItem> items, List<Vector2Int> roomTiles)

@@ -103,6 +103,7 @@ GameObject:
   - component: {fileID: 1605164739335077337}
   - component: {fileID: 6044208892168296972}
   - component: {fileID: 1758362546745876784}
+  - component: {fileID: 1087003564520315084}
   - component: {fileID: -7800108789152354533}
   - component: {fileID: 6029523824072890778}
   - component: {fileID: 249757544766573769}
@@ -123,7 +124,7 @@ Transform:
   m_GameObject: {fileID: 7123996893758103633}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -127.00713, y: 71.289505, z: -1.8626509}
+  m_LocalPosition: {x: 6, y: 74, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -161,6 +162,20 @@ MonoBehaviour:
   anim: {fileID: 0}
   weaponPoint: {fileID: 5665572536717414489}
   hitbox: {fileID: 6491839066225321309}
+--- !u!114 &1087003564520315084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7123996893758103633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89cbe39e046ee2e47b6e5afceefaeed8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFull: 
+  slots: []
 --- !u!50 &-7800108789152354533
 Rigidbody2D:
   serializedVersion: 5
