@@ -6,11 +6,9 @@ public class Weapon : MonoBehaviour
 {
     [Header("Weapon Data")]
     public SOWeaponScripty weaponData;
-    private GameObject currWeapon => weaponData.weaponObj;
-    public int damage => weaponData.weaponDamage;
-    public float playbackSpeed => weaponData.animtionSpeed;
-
-    public float baseAttackSpeed => weaponData.baseAttackSpeed;
+    public int damage;
+    public float playbackSpeed;
+    public float baseAttackSpeed;
 
     [Header("Attack Speed")]
     private float attackSpeedModifier = 0f;
@@ -30,7 +28,6 @@ public class Weapon : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         hitbox.enabled = false;
-        EquipWeapon();
     }
 
     void Update()
@@ -48,21 +45,25 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    public void EquipWeapon()
+    public void EquipWeapon(SOWeaponScripty data)
     {
-        if (currWeapon == null) return;
+        if (data == null || data.weaponObj == null) return;
+
+        weaponData = data;
+        attackSpeedModifier = 0f;
+        damage = data.weaponDamage;
+        playbackSpeed = data.animtionSpeed;  
+        baseAttackSpeed = data.baseAttackSpeed;
 
         if (equippedWeaponInstance != null) 
         {
             Destroy(equippedWeaponInstance);
         }
 
-        hitbox.offset = weaponData.hitboxOffset;
-        hitbox.size = weaponData.hitboxSize;
-
-        equippedWeaponInstance = Instantiate(currWeapon, weaponPoint.position, weaponPoint.rotation, weaponPoint);
+        hitbox.offset = data.hitboxOffset;
+        hitbox.size = data.hitboxSize;
+        equippedWeaponInstance = Instantiate(data.weaponObj, weaponPoint.position, weaponPoint.rotation, weaponPoint);
     }
-
     protected void Attack()
     {
         
@@ -87,16 +88,8 @@ public class Weapon : MonoBehaviour
 
     public void UnEquipWeapon() 
     {
-        Instantiate(equippedWeaponInstance, weaponPoint.position, Quaternion.identity);
-        weaponData = null;
         Destroy(equippedWeaponInstance);
-    }
-
-    public void SwapWeapon(SOWeaponScripty newWeaponData)
-    {
-        weaponData = newWeaponData;
-        attackSpeedModifier = 0f; 
-        EquipWeapon();
+        equippedWeaponInstance = null;
     }
 
     public void AddAttackSpeedModifier(float amount) => attackSpeedModifier += amount;
