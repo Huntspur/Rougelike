@@ -18,5 +18,5 @@ MonoBehaviour:
   animtionSpeed: 1
   hitboxOffset: {x: 0, y: 1}
   hitboxSize: {x: 1, y: 1}
-  weaponObj: {fileID: 2138397188925293341, guid: 91f1d94a4c979e54689e340e343844bc, type: 3}
+  weaponObj: {fileID: 2138397188925293341, guid: 2f56f4b10dcd41f4aa68f92ece068be7, type: 3}
   animatorOveride: {fileID: 0}

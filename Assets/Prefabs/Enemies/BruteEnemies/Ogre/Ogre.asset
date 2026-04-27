@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b518c9178cd2cfd4e94e3a6055c1c9f1, type: 3}
-  m_Name: Enemy2
+  m_Name: Ogre
   m_EditorClassIdentifier: 
-  prefab: {fileID: 170344152301488550, guid: 31250154183a68640a4e36388028b2db, type: 3}
-  spawnChance: 0.036
-  maxPerRoom: 2
+  prefab: {fileID: 170344152301488550, guid: 3cc013b00e665094190f6e03b4b040be, type: 3}
+  spawnChance: 0.05
+  maxPerRoom: 1

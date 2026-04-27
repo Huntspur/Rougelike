@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b518c9178cd2cfd4e94e3a6055c1c9f1, type: 3}
-  m_Name: DecorItemTorch
+  m_Name: MaskedOrc
   m_EditorClassIdentifier: 
-  prefab: {fileID: 4612494257278649293, guid: 5d6c03e1b95cfac47b2b75ba01885c35, type: 3}
-  spawnChance: 0.05
-  maxPerRoom: 1
+  prefab: {fileID: 170344152301488550, guid: 2df2250fe66dc514f9e9d4a711174581, type: 3}
+  spawnChance: 1
+  maxPerRoom: 5
