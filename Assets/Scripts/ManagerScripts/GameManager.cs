@@ -108,7 +108,6 @@ public class GameManager : MonoBehaviour
         roomFirstDungeonGenerator.ClearSpawnedObjects();
         roomFirstDungeonGenerator.CreateRooms();
 
-
         camFollow.GetComponent<CameraFollow>().FindTarget();
     }
 }

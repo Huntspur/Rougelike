@@ -71,6 +71,7 @@ public class Weapon : MonoBehaviour
 
         anim.speed = playbackSpeed;
         anim.SetTrigger("Attack");
+        AudioManager.Instance?.PlayWithVariation(AudioManager.Instance.swordSwing);
     }
 
     public void IsAttacking() 

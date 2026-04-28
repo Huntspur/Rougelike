@@ -50,6 +50,7 @@ public class BasicEnemy : MonoBehaviour, IDamageable, IXPSource
     {
         GetComponent<EnemyDropTable>()?.RollDrops();
         GameManager.Instance?.AddXP(XPValue);
+        AudioManager.Instance?.PlayWithVariation(AudioManager.Instance.enemyDeath);
         Destroy(gameObject);
     }
 
@@ -151,7 +152,12 @@ public class BasicEnemy : MonoBehaviour, IDamageable, IXPSource
     public void TakeDamage(int damage, Vector2 hitDirection)
     {
         health -= damage;
+
         //anim.SetTrigger("damage");
+        HitStop.Instance?.Stop(0.0015f);
+        CameraFollow.Instance?.Shake(.15f, 2f);
+        AudioManager.Instance?.PlayWithVariation(AudioManager.Instance.enemyHit);
+
         StartCoroutine(Knockback(hitDirection));
     }
 
@@ -163,7 +169,7 @@ public class BasicEnemy : MonoBehaviour, IDamageable, IXPSource
         rb.linearVelocity = Vector2.zero;
         rb.AddForce(hitDirection * knockbackForce, ForceMode2D.Impulse);
 
-        yield return new WaitForSeconds(knockbackDuration);
+        yield return new WaitForSecondsRealtime(knockbackDuration);
 
         rb.linearVelocity = Vector2.zero;
         isKnockedBack = false;

@@ -12,6 +12,7 @@ public class HealthOrb : MonoBehaviour
             if (health != null) 
             {
                 health.Heal(healAmount);
+                AudioManager.Instance?.PlayWithVariation(AudioManager.Instance.healthPickup);
                 Destroy(gameObject);
             }
         }

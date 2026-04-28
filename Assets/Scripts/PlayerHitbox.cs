@@ -22,6 +22,9 @@ public class PlayerHitbox : MonoBehaviour
                 if (target != null)
                 {
                     target.TakeDamage(playerWeapon.damage, hitDir);
+                    ParticleManager.Instance?.PlayBloodHit(collision.transform.position);
+                    ParticleManager.Instance?.PlayDamageNumber(playerWeapon.damage, collision.transform.position);
+                    AudioManager.Instance?.PlayWithVariation(AudioManager.Instance.swordHit);
                 }
             }
         }

@@ -84,6 +84,8 @@ public class Boss : MonoBehaviour, IDamageable, IXPSource
         {
             currentPhase = BossPhase.PhaseTwo;
             Debug.Log("phase 2");
+            AudioManager.Instance?.Play(AudioManager.Instance.bossPhaseTwo);
+
         }
 
         if (shootTimer > 0) 
@@ -97,8 +99,12 @@ public class Boss : MonoBehaviour, IDamageable, IXPSource
 
         switch (currentPhase)
         {
-            case BossPhase.PhaseOne: HandlePhaseOne(); break;
-            case BossPhase.PhaseTwo: HandlePhaseTwo(); break;
+            case BossPhase.PhaseOne:
+                HandlePhaseOne(); 
+                break;
+            case BossPhase.PhaseTwo: 
+                HandlePhaseTwo();
+                break;
         }
     }
 
@@ -137,10 +143,15 @@ public class Boss : MonoBehaviour, IDamageable, IXPSource
 
     void Shoot()
     {
-        if (projectilePrefab == null || firePoint == null) return;
+        if (projectilePrefab == null || firePoint == null)
+        {
+            return;
+        }
+
         Vector2 dir = ((Vector2)player.position - (Vector2)firePoint.position).normalized;
         GameObject proj = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
         EnemyProjectile ep = proj.GetComponent<EnemyProjectile>();
+
         if (ep != null) 
         {
             ep.Init(dir, projectileSpeed, damage);
@@ -171,6 +182,11 @@ public class Boss : MonoBehaviour, IDamageable, IXPSource
     public void TakeDamage(int damage, Vector2 hitDirection)
     {
         currentHealth -= damage;
+
+        HitStop.Instance?.Stop(0.0015f);
+        CameraFollow.Instance?.Shake(.3f, 3.5f);
+        AudioManager.Instance?.PlayWithVariation(AudioManager.Instance.bossHit);
+
         if (currentHealth <= 0)
         {
             Die();
@@ -186,7 +202,7 @@ public class Boss : MonoBehaviour, IDamageable, IXPSource
         isKnockedBack = true;
         rb.linearVelocity = Vector2.zero;
         rb.AddForce(hitDirection * knockbackForce, ForceMode2D.Impulse);
-        yield return new WaitForSeconds(knockbackDuration);
+        yield return new WaitForSecondsRealtime(knockbackDuration);
         rb.linearVelocity = Vector2.zero;
         isKnockedBack = false;
     }
@@ -195,7 +211,8 @@ public class Boss : MonoBehaviour, IDamageable, IXPSource
     {
         IsDefeated = true;
         GameManager.Instance?.AddXP(XPValue);
-        // Unlock exit door here eventually
+        AudioManager.Instance?.Play(AudioManager.Instance.bossDeath);
+
         Destroy(gameObject);
     }
 }

@@ -27,6 +27,10 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
 
+        CameraFollow.Instance?.Shake(.2f, 3f);
+        ParticleManager.Instance?.PlayDamageNumber(damage, transform.position, true);
+        AudioManager.Instance?.PlayWithVariation(AudioManager.Instance.playerHit);
+
         if (currentHealth <= 0)
         {
             Die();
@@ -52,12 +56,9 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     private void Die()
     {
+        AudioManager.Instance?.Play(AudioManager.Instance.playerDeath);
+
         GameManager.Instance?.SaveHighScore();
-        GameOverScreen.Show(
-            GameManager.Instance.totalXP,
-            GameManager.Instance.dungeonLevel,
-            GameManager.Instance.highScoreXP,
-            GameManager.Instance.highScoreDungeons
-        );
+        GameOverScreen.Show(GameManager.Instance.totalXP, GameManager.Instance.dungeonLevel, GameManager.Instance.highScoreXP, GameManager.Instance.highScoreDungeons);
     }
 }

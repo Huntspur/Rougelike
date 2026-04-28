@@ -12,7 +12,10 @@ public class ItemPickup : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (inventory == null) { return; }
+        if (inventory == null) 
+        { 
+            return;
+        }
 
         if (collision.CompareTag("Player")) 
         {
@@ -20,10 +23,9 @@ public class ItemPickup : MonoBehaviour
             {
                 if (inventory.isFull[i] == false) 
                 {
-                    //add item
-
                     inventory.isFull[i] = true;
                     Instantiate(itemButton, inventory.slots[i].transform, false);
+                    AudioManager.Instance?.PlayWithVariation(AudioManager.Instance.itemPickup);
                     Destroy(gameObject);
                     break;
                 }
