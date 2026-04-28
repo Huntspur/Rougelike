@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 170344152301488550, guid: 35f83e28b5f33a140975c0b4131e0f3b, type: 3}
   spawnChance: 1
-  maxPerRoom: 1
+  maxPerRoom: 2

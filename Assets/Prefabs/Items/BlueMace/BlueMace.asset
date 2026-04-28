@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: BlueMace
   m_EditorClassIdentifier: 
   prefab: {fileID: 2138397188925293341, guid: e7ec9a53489dc3d4da0dfd7e938b0f7b, type: 3}
-  spawnChance: 0.678
+  spawnChance: 0.01
   maxPerRoom: 1

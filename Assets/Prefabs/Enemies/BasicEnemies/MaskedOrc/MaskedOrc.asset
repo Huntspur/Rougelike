@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: MaskedOrc
   m_EditorClassIdentifier: 
   prefab: {fileID: 170344152301488550, guid: 2df2250fe66dc514f9e9d4a711174581, type: 3}
-  spawnChance: 1
+  spawnChance: 0.471
   maxPerRoom: 5

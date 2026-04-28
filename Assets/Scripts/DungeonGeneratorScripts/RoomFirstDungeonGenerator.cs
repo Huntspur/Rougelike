@@ -14,6 +14,10 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
     private int offset = 1;
     [SerializeField]
     private bool randomWalkRooms = false;
+    [SerializeField]
+    private int minBossRoomWidth = 8;
+    [SerializeField]
+    private int minBossRoomHeight = 8;
 
     [Header("Prefabs To Spawn")]
     [SerializeField] 
@@ -106,16 +110,10 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
 
         Vector2Int spawnTile = FindNearestFloorTile(center, floor);
 
-        //This spawns new player
-        /*
-        var player = Instantiate(playerPrefab, new Vector3(spawnTile.x, spawnTile.y, 0), Quaternion.identity);
-        _spawnedObjects.Add(player);
-        */
-        //We will instead just change position of player everytime new dungeon generated
-
         playerPrefab.gameObject.transform.position = new Vector3(spawnTile.x, spawnTile.y, 0);
-
     }
+
+
 
     private void SpawnItemInRoom(List<SpawnableItem> items, List<Vector2Int> roomTiles)
     {
@@ -140,10 +138,10 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
             }
         }
     }
-    
-    private void SpawnBossAndExit(List<BoundsInt> rooms, HashSet<Vector2Int> floor) 
+
+    private void SpawnBossAndExit(List<BoundsInt> rooms, HashSet<Vector2Int> floor)
     {
-        if ((exitDoor == null && bossPrefabs.Count == 0)  || rooms.Count < 2)
+        if ((exitDoor == null && bossPrefabs.Count == 0) || rooms.Count < 2)
         {
             return;
         }
@@ -156,10 +154,27 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
         {
             Vector2Int center = GetRoomCenter(rooms[i]);
             float distance = Vector2Int.Distance(startCenter, center);
-            if (distance > maxDistance)
+
+            bool isLargeEnough = rooms[i].size.x >= minBossRoomWidth && rooms[i].size.y >= minBossRoomHeight;
+
+            if (distance > maxDistance && isLargeEnough)
             {
                 maxDistance = distance;
                 furthestRoom = rooms[i];
+            }
+        }
+
+        if (maxDistance == 0f)
+        {
+            int largestArea = 0;
+            for (int i = 1; i < rooms.Count; i++)
+            {
+                int area = rooms[i].size.x * rooms[i].size.y;
+                if (area > largestArea)
+                {
+                    largestArea = area;
+                    furthestRoom = rooms[i];
+                }
             }
         }
 
@@ -170,9 +185,8 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkMapGenerator
         _spawnedObjects.Add(exit);
 
         int bossToSpawn = UnityEngine.Random.Range(0, bossPrefabs.Count);
-        var boss = Instantiate(bossPrefabs[bossToSpawn], new Vector3(exitTile.x, exitTile.y, 0), Quaternion.identity); //spawning boss for now, would like own function
-        _spawnedObjects.Add(boss);//boss just spawns in same room as exit, would like seperate rooms so player can collect key?
-
+        var boss = Instantiate(bossPrefabs[bossToSpawn], new Vector3(exitTile.x, exitTile.y, 0), Quaternion.identity);
+        _spawnedObjects.Add(boss);
     }
     private List<Vector2Int> GetFloorTilesInRoom(BoundsInt room, HashSet<Vector2Int> floor)
     {

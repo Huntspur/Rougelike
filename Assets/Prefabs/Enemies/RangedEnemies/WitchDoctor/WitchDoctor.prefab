@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1354411505907075832}
   - component: {fileID: 6721406457260781203}
+  - component: {fileID: -194625677890725741}
   - component: {fileID: 6486808767947020075}
   - component: {fileID: 918348837029858089}
   - component: {fileID: 7121214728453977294}
@@ -31,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 170344152301488550}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -29.46, y: 26.38, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -57,12 +58,28 @@ MonoBehaviour:
   shootRange: 5
   fleeRange: 2
   shootCooldown: 2
+  xpValue: 10
   projectilePrefab: {fileID: 2369233468146798544, guid: d1580caca1e57f144bc200948f6c736b, type: 3}
   firePoint: {fileID: 5421394092958599023}
   projectileSpeed: 6
   projectileDamage: 10
   knockbackForce: 5
   knockbackDuration: 0.2
+--- !u!114 &-194625677890725741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 170344152301488550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cc61463d2bd6054483133f81cf24574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drops:
+  - prefab: {fileID: 8422446886172014281, guid: 6cb800ebb84e99143ba4a871cb2a4026, type: 3}
+    dropChance: 0.1
 --- !u!212 &6486808767947020075
 SpriteRenderer:
   m_ObjectHideFlags: 0
