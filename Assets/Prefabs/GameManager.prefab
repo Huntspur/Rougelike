@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &9097672895390432569
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8958037886734795776}
+  - component: {fileID: 9119678283124435465}
+  - component: {fileID: 7341352510815686670}
+  - component: {fileID: 6972188378048997328}
+  - component: {fileID: 6086493372644076761}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8958037886734795776
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9097672895390432569}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 50.562126, y: 29.450506, z: 4771.085}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9119678283124435465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9097672895390432569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0feb866fe4ade7f4fb8ab41e0b05582d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camFollow: {fileID: 0}
+  roomFirstDungeonGenerator: {fileID: 0}
+  floorTileMap: {fileID: 0}
+  wallTileMap: {fileID: 0}
+  dungeonLevel: 1
+  totalXP: 0
+  highScoreDungeons: 0
+  highScoreXP: 0
+  healthScalePerLevel: 0.2
+  damageScalePerLevel: 0.1
+--- !u!114 &7341352510815686670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9097672895390432569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aeca7a67b2a55747891a9e63d68a212, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6972188378048997328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9097672895390432569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63378ecb0ba162a49852687bd8a30ca9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bloodHitPrefab: {fileID: 6968585317848112566, guid: 64ca5cc5c7cb68e4aa708f5e0ecdf266, type: 3}
+  dustPrefab: {fileID: 5709806140681020359, guid: 3b6697874ef751643ba09120c651e4a9, type: 3}
+  damageNumber: {fileID: 2009950008671994647, guid: 88f17b45fe5182c47890348a46b9b7f4, type: 3}
+--- !u!114 &6086493372644076761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9097672895390432569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f927a7e728b7f8742845af68eafb8677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHit: {fileID: 8300000, guid: a72c0bf1ceda71b4ca5fb683af060daa, type: 3}
+  playerDeath: {fileID: 8300000, guid: a4e118d2590aa7d41a94b2a637b24927, type: 3}
+  footstep: {fileID: 8300000, guid: c8473b37ac1b90449b32d36596d90a42, type: 3}
+  swordSwing: {fileID: 8300000, guid: 17e36f3ac6a1b8447a1ea0d547fa1934, type: 3}
+  swordHit: {fileID: 8300000, guid: c32d0f5776faf324c94ece693c5de92a, type: 3}
+  enemyHit: {fileID: 8300000, guid: a0a4124e9f3de1b40af0a357f3202a04, type: 3}
+  enemyDeath: {fileID: 8300000, guid: 5aacbb3f495a8414590a7c810715b092, type: 3}
+  enemyShoot: {fileID: 8300000, guid: 14b1610bcf58ebf44999fea427a617ef, type: 3}
+  bossHit: {fileID: 8300000, guid: a0a4124e9f3de1b40af0a357f3202a04, type: 3}
+  bossDeath: {fileID: 8300000, guid: 5aacbb3f495a8414590a7c810715b092, type: 3}
+  bossPhaseTwo: {fileID: 8300000, guid: 14b1610bcf58ebf44999fea427a617ef, type: 3}
+  itemPickup: {fileID: 8300000, guid: 694706ac983cbe64d8f1bcbd1b08debc, type: 3}
+  healthPickup: {fileID: 8300000, guid: c82cbdb9d2a95154bbe213b2cd00fbe0, type: 3}
+  gameMusic: {fileID: 8300000, guid: ec52bd2276eb3884993736172c03bbdc, type: 3}
+  buttonClick: {fileID: 8300000, guid: c4a53c3c230be434784f8d78edc7093d, type: 3}
+  masterVolume: 1
+  sfxVolume: 1
+  musicVolume: 0.5
