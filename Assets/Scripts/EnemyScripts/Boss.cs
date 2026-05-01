@@ -3,7 +3,10 @@ using UnityEngine;
 
 public class Boss : MonoBehaviour, IDamageable, IXPSource
 {
-    public enum BossPhase { PhaseOne, PhaseTwo }
+    public enum BossPhase
+    {
+        PhaseOne, PhaseTwo
+    }
     public BossPhase currentPhase = BossPhase.PhaseOne;
 
     [Header("Stats")]
@@ -172,20 +175,23 @@ public class Boss : MonoBehaviour, IDamageable, IXPSource
         var minion = Instantiate(minionPrefabs[index], spawnPos, Quaternion.identity);
         currentMinions++;
 
-        // Track when minion dies to decrement count
+        //when minion dies to decrement count
         var tracker = minion.AddComponent<MinionTracker>();
         tracker.boss = this;
     }
 
-    public void MinionDied() => currentMinions--;
+    public void MinionDied()
+    { 
+        currentMinions--;
+    }
 
     public void TakeDamage(int damage, Vector2 hitDirection)
     {
         currentHealth -= damage;
 
-        HitStop.Instance?.Stop(0.0015f);
-        CameraFollow.Instance?.Shake(.3f, 3.5f);
-        AudioManager.Instance?.PlayWithVariation(AudioManager.Instance.bossHit);
+        HitStop.Instance.Stop(0.0015f);
+        CameraFollow.Instance.Shake(.3f, 3.5f);
+        AudioManager.Instance.PlayWithVariation(AudioManager.Instance.bossHit);
 
         if (currentHealth <= 0)
         {
@@ -210,8 +216,8 @@ public class Boss : MonoBehaviour, IDamageable, IXPSource
     private void Die()
     {
         IsDefeated = true;
-        GameManager.Instance?.AddXP(XPValue);
-        AudioManager.Instance?.Play(AudioManager.Instance.bossDeath);
+        GameManager.Instance.AddXP(XPValue);
+        AudioManager.Instance.Play(AudioManager.Instance.bossDeath);
 
         Destroy(gameObject);
     }

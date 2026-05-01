@@ -7,5 +7,8 @@ public interface IDamageable
 
 public interface IXPSource
 {
-    int XPValue { get; }
+    int XPValue 
+    { 
+        get; 
+    }
 }

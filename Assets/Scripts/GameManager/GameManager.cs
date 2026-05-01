@@ -23,8 +23,8 @@ public class GameManager : MonoBehaviour
     public int highScoreXP;
 
     [Header("Scaling")]
-    public float healthScalePerLevel = 0.2f;  // +20% health per dungeon
-    public float damageScalePerLevel = 0.1f;  // +10% damage per dungeon
+    public float healthScalePerLevel = 0.2f;  //0.2 = 20%
+    public float damageScalePerLevel = 0.1f;  
 
     void Awake()
     {

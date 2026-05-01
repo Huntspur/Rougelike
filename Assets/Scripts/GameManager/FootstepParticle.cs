@@ -20,8 +20,8 @@ public class FootstepParticle : MonoBehaviour
             if (stepTimer <= 0f)
             {
                 stepTimer = stepInterval;
-                ParticleManager.Instance?.PlayDust(feet.position);
-                AudioManager.Instance?.PlayWithVariation(AudioManager.Instance.footstep);
+                ParticleManager.Instance.PlayDust(feet.position);
+                AudioManager.Instance.PlayWithVariation(AudioManager.Instance.footstep);
             }
         }
     }

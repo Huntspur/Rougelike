@@ -8,6 +8,7 @@ public class BasicEnemy : MonoBehaviour, IDamageable, IXPSource
     {
         Idle, Chase, Attack
     }
+
     public EnemyState currentState = EnemyState.Idle;
 
     [Header("Stats")]
@@ -49,8 +50,8 @@ public class BasicEnemy : MonoBehaviour, IDamageable, IXPSource
     private void Die()
     {
         GetComponent<EnemyDropTable>()?.RollDrops();
-        GameManager.Instance?.AddXP(XPValue);
-        AudioManager.Instance?.PlayWithVariation(AudioManager.Instance.enemyDeath);
+        GameManager.Instance.AddXP(XPValue);
+        AudioManager.Instance.PlayWithVariation(AudioManager.Instance.enemyDeath);
         Destroy(gameObject);
     }
 
@@ -155,8 +156,8 @@ public class BasicEnemy : MonoBehaviour, IDamageable, IXPSource
 
         //anim.SetTrigger("damage");
         HitStop.Instance?.Stop(0.0015f);
-        CameraFollow.Instance?.Shake(.15f, 2f);
-        AudioManager.Instance?.PlayWithVariation(AudioManager.Instance.enemyHit);
+        CameraFollow.Instance.Shake(.15f, 2f);
+        AudioManager.Instance.PlayWithVariation(AudioManager.Instance.enemyHit);
 
         StartCoroutine(Knockback(hitDirection));
     }

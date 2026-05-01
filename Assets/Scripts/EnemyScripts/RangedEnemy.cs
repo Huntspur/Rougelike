@@ -3,7 +3,8 @@ using System.Collections;
 
 public class RangedEnemy : MonoBehaviour, IDamageable, IXPSource
 {
-    public enum EnemyState { 
+    public enum EnemyState
+    { 
         Idle, Chase, Shoot, Flee 
     }
     public EnemyState currentState = EnemyState.Idle;
@@ -171,9 +172,9 @@ public class RangedEnemy : MonoBehaviour, IDamageable, IXPSource
     {
         health -= damage;
 
-        HitStop.Instance?.Stop(0.0015f);
-        CameraFollow.Instance?.Shake(.15f, 2f);
-        AudioManager.Instance?.PlayWithVariation(AudioManager.Instance.enemyHit);
+        HitStop.Instance.Stop(0.0015f);
+        CameraFollow.Instance.Shake(.15f, 2f);
+        AudioManager.Instance.PlayWithVariation(AudioManager.Instance.enemyHit);
 
         StartCoroutine(Knockback(hitDirection));
     }
@@ -190,10 +191,10 @@ public class RangedEnemy : MonoBehaviour, IDamageable, IXPSource
 
     private void Die() 
     {
-        GetComponent<EnemyDropTable>()?.RollDrops();
-        GameManager.Instance?.AddXP(XPValue);
+        GetComponent<EnemyDropTable>().RollDrops();
+        GameManager.Instance.AddXP(XPValue);
 
-        AudioManager.Instance?.PlayWithVariation(AudioManager.Instance.enemyDeath);
+        AudioManager.Instance.PlayWithVariation(AudioManager.Instance.enemyDeath);
 
         Destroy(gameObject);
     }

@@ -17,7 +17,6 @@ public class CameraFollow : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        Debug.Log("Camera instance: " + CameraFollow.Instance);
     }
 
     public void FindTarget()
@@ -33,7 +32,7 @@ public class CameraFollow : MonoBehaviour
             return;
         }
 
-        Vector3 desiredPosition = new Vector3(target.position.x, target.position.y + yOffset, -10f);
+        Vector3 desiredPosition = new(target.position.x, target.position.y + yOffset, -10f);
         transform.position = Vector3.Lerp(transform.position, desiredPosition + shakeOffset, followSpeed * Time.deltaTime);
 
         if (shakeDuration > 0)

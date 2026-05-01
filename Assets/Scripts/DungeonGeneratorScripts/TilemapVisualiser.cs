@@ -8,7 +8,7 @@ public class TilemapVisualiser : MonoBehaviour
     [SerializeField]
     private Tilemap floor, wallTileMap;
     [SerializeField]
-    private TileBase floorTile, wallTile; //Array select random ones
+    private TileBase floorTile, wallTile; //could use array to select random tiles for variation
 
 
     public void PaintFloorTiles(IEnumerable<Vector2Int> floorPositions) 
